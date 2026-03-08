@@ -14,7 +14,7 @@
   <Description DefaultValue="Copy HEX codes of your favorite colors to clipboard"/>
   <IconUrl DefaultValue="https://localhost:3000/icon-80.png"/>
   <HighResolutionIconUrl DefaultValue="https://localhost:3000/icon-80.png"/>
-  <SupportUrl DefaultValue="https://localhost:3000"/>
+  <SupportUrl DefaultValue="https://cloud8high.github.io/PowerPoint-Color-Picker-Addin/"/>
 
   <AppDomains>
     <AppDomain>https://localhost:3000</AppDomain>
