@@ -1,0 +1,10 @@
+{
+  "name": "color-picker-addin",
+  "version": "1.0.0",
+  "description": "PowerPoint カラーピッカーアドイン",
+  "scripts": {
+    "icons":  "node generate-icons.js",
+    "setup":  "npx office-addin-dev-certs install --days 365",
+    "start":  "npx office-addin-dev-certs install --days 365 && npx http-server . -p 3000 -S -C \"%USERPROFILE%\\.office-addin-dev-certs\\localhost.crt\" -K \"%USERPROFILE%\\.office-addin-dev-certs\\localhost.key\" -c-1 --cors"
+  }
+}
