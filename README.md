@@ -2,7 +2,8 @@
 
 ## 概要
 
-PowerPoint 用のカラーピッカーアドインです。使いたい色のスウォッチをクリックすると、HEXコードがクリップボードにコピーされます。
+PowerPoint 用のカラーピッカーアドインです。使いたい色のスウォッチをクリックすると、HEXコードがクリップボードにコピーされます。  
+[Link: Color Picker](https://cloud8high.github.io/PowerPoint-Color-Picker-Addin/taskpane.html)
 
 ## 動作環境
 
