@@ -2,6 +2,8 @@
 
 Office.onReady(() => {
     buildColorGrid();
+    buildCorporateColorGrid();
+    initTabs();
 });
 
 // ======================================================
@@ -94,6 +96,137 @@ function buildColorGrid() {
             swatch.addEventListener('click', () => copyHex(hex));
             grid.appendChild(swatch);
         });
+    });
+}
+
+// ======================================================
+// Tab switching
+// ======================================================
+function initTabs() {
+    document.querySelectorAll('.tab-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(c => c.classList.add('hidden'));
+            btn.classList.add('active');
+            document.getElementById(btn.dataset.tab).classList.remove('hidden');
+        });
+    });
+}
+
+// ======================================================
+// Corporate brand colors
+// ======================================================
+const CORP_MAIN = [
+    { hex: '#000099', name: 'Corporate Blue' },
+    { hex: '#000000', name: 'Black' },
+    { hex: '#404040', name: 'Dark Gray' },
+    { hex: '#FFFFFF', name: 'White' },
+];
+
+const CORP_NEUTRAL = [
+    { hex: '#727171', name: 'Pantone 424C' },
+    { hex: '#9fa0a0', name: 'Pantone Cool Gray 7C' },
+    { hex: '#c9caca', name: 'Pantone Cool Gray 3C' },
+    { hex: '#efefef', name: 'Pantone Cool Gray 1C' },
+];
+
+const CORP_ACCENT = [
+    {
+        label: 'DARK',
+        colors: [
+            { hex: '#206aa4', name: 'Pantone 2151C' },
+            { hex: '#008caa', name: 'Pantone 3155C' },
+            { hex: '#1c9576', name: 'Pantone 2417C' },
+            { hex: '#669e1d', name: 'Pantone 370C' },
+            { hex: '#e5c53f', name: 'Pantone 7751C' },
+            { hex: '#c76b00', name: 'Pantone 2014C' },
+            { hex: '#ba2947', name: 'Pantone 7419C' },
+            { hex: '#b62a76', name: 'Pantone 2063C' },
+            { hex: '#794b88', name: 'Pantone 7677C' },
+            { hex: '#9e7220', name: 'Pantone 7558C' },
+        ],
+    },
+    {
+        label: 'BRIGHT',
+        colors: [
+            { hex: '#2980c4', name: 'Pantone 2143C' },
+            { hex: '#00a6cb', name: 'Pantone 3125C' },
+            { hex: '#27b28d', name: 'Pantone 2413C' },
+            { hex: '#7cbd27', name: 'Pantone 368C' },
+            { hex: '#ffdb46', name: 'Pantone 1215C' },
+            { hex: '#f08300', name: 'Pantone 144C' },
+            { hex: '#e03657', name: 'Pantone 710C' },
+            { hex: '#db368d', name: 'Pantone 2038C' },
+            { hex: '#915da3', name: 'Pantone 3593C' },
+            { hex: '#be8a2b', name: 'Pantone 7556C' },
+        ],
+    },
+    {
+        label: 'MIDTONE',
+        colors: [
+            { hex: '#7aa2d6', name: 'Pantone 659C' },
+            { hex: '#4dbfd8', name: 'Pantone 637C' },
+            { hex: '#87cab2', name: 'Pantone 564C' },
+            { hex: '#a9d06b', name: 'Pantone 2284C' },
+            { hex: '#ffe787', name: 'Pantone 1205C' },
+            { hex: '#f7aa53', name: 'Pantone 157C' },
+            { hex: '#efa5a4', name: 'Pantone 701C' },
+            { hex: '#e47fb0', name: 'Pantone 673C' },
+            { hex: '#b08bbe', name: 'Pantone 521C' },
+            { hex: '#d3ac64', name: 'Pantone 466C' },
+        ],
+    },
+    {
+        label: 'LIGHT',
+        colors: [
+            { hex: '#bbcce9', name: 'Pantone 658C' },
+            { hex: '#acdcea', name: 'Pantone 2975C' },
+            { hex: '#c2e2d2', name: 'Pantone 621C' },
+            { hex: '#d2e6ae', name: 'Pantone 7485C' },
+            { hex: '#fff2c2', name: 'Pantone 7499C' },
+            { hex: '#fad09e', name: 'Pantone 712C' },
+            { hex: '#f5c9bf', name: 'Pantone 495C' },
+            { hex: '#f1bdd6', name: 'Pantone 217C' },
+            { hex: '#d1bedc', name: 'Pantone 7437C' },
+            { hex: '#e0cfbd', name: 'Pantone 2310C' },
+        ],
+    },
+];
+
+function isLightColor(hex) {
+    const { r, g, b } = hexToRgb(hex);
+    return (r * 0.299 + g * 0.587 + b * 0.114) > 210;
+}
+
+function makeSwatch(hex, name) {
+    const { r, g, b } = hexToRgb(hex);
+    const swatch = document.createElement('div');
+    swatch.className = 'color-swatch' + (isLightColor(hex) ? ' swatch-outline' : '');
+    swatch.style.backgroundColor = hex;
+    swatch.title = `${name}\n${hex.toUpperCase()}\nRGB(${r}, ${g}, ${b})`;
+    swatch.dataset.hex = hex;
+    swatch.addEventListener('click', () => copyHex(hex.toUpperCase()));
+    return swatch;
+}
+
+function buildCorpRow(container, labelText, colors) {
+    container.className = 'corp-row';
+    const labelEl = document.createElement('div');
+    labelEl.className = 'corp-row-label';
+    labelEl.textContent = labelText;
+    container.appendChild(labelEl);
+    colors.forEach(({ hex, name }) => container.appendChild(makeSwatch(hex, name)));
+}
+
+function buildCorporateColorGrid() {
+    buildCorpRow(document.getElementById('corp-main-row'), 'MAIN', CORP_MAIN);
+    buildCorpRow(document.getElementById('corp-neutral-row'), 'NEUTRAL', CORP_NEUTRAL);
+
+    const accentGrid = document.getElementById('corp-accent-grid');
+    CORP_ACCENT.forEach(({ label, colors }) => {
+        const row = document.createElement('div');
+        accentGrid.appendChild(row);
+        buildCorpRow(row, label, colors);
     });
 }
 

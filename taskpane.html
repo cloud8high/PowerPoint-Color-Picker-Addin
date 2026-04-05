@@ -14,9 +14,23 @@
         <header>
             <h1>Color Picker</h1>
             <p class="subtitle">Click a swatch to copy its HEX code</p>
+            <div class="tabs">
+                <button class="tab-btn active" data-tab="my-colors">My Colors</button>
+                <button class="tab-btn" data-tab="corporate-colors">Corporate Colors</button>
+            </div>
         </header>
         <main>
-            <div id="color-grid"></div>
+            <div id="my-colors" class="tab-content">
+                <div id="color-grid"></div>
+            </div>
+            <div id="corporate-colors" class="tab-content hidden">
+                <div class="corp-section-label">Main Color</div>
+                <div id="corp-main-row"></div>
+                <div class="corp-section-label">Neutral Palette</div>
+                <div id="corp-neutral-row"></div>
+                <div class="corp-section-label">Accent Palette</div>
+                <div id="corp-accent-grid"></div>
+            </div>
         </main>
         <div id="toast" class="toast hidden">
             <div id="toast-swatch" class="toast-swatch"></div>
